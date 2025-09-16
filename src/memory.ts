@@ -1,6 +1,7 @@
 import { Memory } from "@mastra/memory";
 import { fastembed } from "@mastra/fastembed";
-import { PgVector, PostgresStore } from "@mastra/pg";
+import { PostgresStore } from "@mastra/pg";
+import { createPgVectorConnection } from "./vector";
 
 export const agentMemory = new Memory({
   embedder: fastembed,
@@ -14,9 +15,7 @@ export const agentMemory = new Memory({
   storage: new PostgresStore({
     connectionString: process.env.DATABASE_URL!,
   }),
-  vector: new PgVector({
-    connectionString: process.env.DATABASE_URL!,
-  }),
+  vector: createPgVectorConnection(),
 });
 
 // export const agentMemory: Memory = new Memory({
